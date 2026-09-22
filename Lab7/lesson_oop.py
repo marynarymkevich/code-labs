@@ -153,3 +153,44 @@ print(f"After tax_rate changing: {product1.price_with_tax(), product2.price_with
 # 6. Give one Product object its own tax_rate
 product3.tax_rate = 50
 print(f"Product3 tax_rate: {product3.tax_rate}, Product2 tax_rate: {product2.tax_rate}, Product class tax_rate: {Product.tax_rate}")
+
+
+
+# ======= Part D ========================
+
+# 1. Create at least six Student objects, 2. Store all Students in a list
+class Student:
+    def __init__(self, name, score):
+        self.name = name
+        self.score = score
+
+    def get_status(self):
+        return "PASS" if self.score >= 70 else "FAIL"
+
+students = []
+students.append(Student("Anna", 50))
+students.append(Student("Maria", 60))
+students.append(Student("Alex", 800))
+students.append(Student("Volha", 70))
+students.append(Student("Cristy", 100))
+students.append(Student("Bob", 90))
+
+
+# 3. Loop through the list and print each student's name and score
+for student in students:
+    print( f"Name: {student.name}, Score: {student.score}")
+
+
+# 5. Loop and print each student's name and status.
+for student in students:
+    print(f"Name: {student.name}, Status: {student.get_status()}")
+
+
+# 6. Create a list containing only students with a score of 70 or higher
+highest_score_students = [
+    student
+    for student in students
+    if student.score >= 70
+]
+for student in highest_score_students:
+    print(f"Name: {student.name}, Score: {student.score}, Status: {student.get_status()}")
