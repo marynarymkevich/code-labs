@@ -170,7 +170,7 @@ class Student:
 students = []
 students.append(Student("Anna", 50))
 students.append(Student("Maria", 60))
-students.append(Student("Alex", 800))
+students.append(Student("Alex", 80))
 students.append(Student("Volha", 70))
 students.append(Student("Cristy", 100))
 students.append(Student("Bob", 90))
@@ -215,6 +215,7 @@ class Course:
     def add_student(self, student):
         self.students.append(student)
 
+
 # 3 - 4. Create a Teacher object and Course object
 teacher = Teacher("Anna")
 math = Course('Math', teacher)
@@ -230,3 +231,80 @@ math.add_student(Student("Alex", 50))
 # 7. Loop through course.students and print the name
 for student in math.students:
     print(f"Name: {student.name}, Score: {student.score}, Status: {student.get_status()}")
+
+
+
+# ============== Part F - Course Manager ======================
+
+# 1-3. Student class with name, score and status method
+class Student:
+    def __init__(self, name, score):
+        self.name = name
+
+        # 8. Validation using ValueError
+        if score < 0 or score > 100:
+            raise ValueError(f"Invalid score for {name}: {score}")
+        
+        self.score = score
+
+    def get_status(self):
+        if self.score >= 70:
+            return "PASS"
+        else:
+            return "FAIL"
+
+
+# 1, 4. Teacher class with name
+class Teacher:
+    def __init__(self, name):
+        self.name = name
+
+
+# 1, 5-7. Course class containing name, teacher, students list and management methods
+class Course:
+    def __init__(self, name, teacher):
+        self.name = name
+        self.teacher = teacher
+        self.students = []
+
+    def add_student(self, student):
+        self.students.append(student)
+
+    def get_student_count(self):
+        return len(self.students)
+
+    def get_passed_students(self):
+        passed_students = []
+        for student in self.students:
+            if student.get_status() == "PASS":
+                passed_students.append(student)
+        return passed_students
+
+
+# 9. Create Teacher, Course, and at least five Student objects
+teacher = Teacher("Dr. Smith")
+python_course = Course("Python Basics", teacher)
+
+student1 = Student("Anna", 85)
+student2 = Student("Bob", 60)
+student3 = Student("Maria", 90)
+student4 = Student("Alex", 45)
+student5 = Student("Volha", 75)
+
+python_course.add_student(student1)
+python_course.add_student(student2)
+python_course.add_student(student3)
+python_course.add_student(student4)
+python_course.add_student(student5)
+
+
+# 10. Print a simple course summary
+print("\n--- COURSE SUMMARY ---")
+print(f"Course: {python_course.name}")
+print(f"Teacher: {python_course.teacher.name}")
+print(f"Number of students: {python_course.get_student_count()}")
+
+passed_students = python_course.get_passed_students()
+print("Passed Students:")
+for student in passed_students:
+    print(f"{student.name} ({student.score} points)")
