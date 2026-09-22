@@ -194,3 +194,39 @@ highest_score_students = [
 ]
 for student in highest_score_students:
     print(f"Name: {student.name}, Score: {student.score}, Status: {student.get_status()}")
+
+
+
+# ============== Part E - Objects inside objects =====================
+
+# 1. Create a Teacher class
+class Teacher:
+    def __init__(self, name):
+        self.name = name
+
+
+# 2. Create a Course class with a course name and a teacher
+class Course:
+    def __init__(self, name, teacher):
+        self.name = name
+        self.teacher = teacher
+        self.students = []
+
+    def add_student(self, student):
+        self.students.append(student)
+
+# 3 - 4. Create a Teacher object and Course object
+teacher = Teacher("Anna")
+math = Course('Math', teacher)
+print(f"Course {math.name} with teacher {math.teacher.name}")
+
+
+# 6. Add an add_student() method
+math.add_student(Student("Anna", 30))
+math.add_student(Student("Bob", 80))
+math.add_student(Student("Alex", 50))
+
+
+# 7. Loop through course.students and print the name
+for student in math.students:
+    print(f"Name: {student.name}, Score: {student.score}, Status: {student.get_status()}")
