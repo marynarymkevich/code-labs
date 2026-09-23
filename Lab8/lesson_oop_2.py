@@ -26,6 +26,44 @@ print(f"Family's account owner: {family_account.owner} with balance: {family_acc
 
 
 
+# =========== Part D - Inherited and subclass-specific behaviour =========
+
+class Employee:
+    def __init__(self, name):
+        self.name = name
+
+    def get_information(self):
+        return f"Employee: {self.name}"
+
+
+class Developer(Employee):
+    def write_code(self):
+        print(f"{self.name} is writing code...")
+
+
+class Manager(Employee):
+    def conduct_meeting(self):
+        print(f"{self.name} is conducting a team meeting...")
+
+
+dev = Developer("Alex")
+mgr = Manager("Sarah")
+emp = Employee("John")
+
+print(f"\n-------- INHERITED BEHAVIOR ----------")
+print(dev.get_information())
+print(mgr.get_information())
+
+print(f"\n-------- SUBCLASS-SPECIFIC METHODS ----------")
+dev.write_code()
+mgr.conduct_meeting()
+
+print(f"\n-------- BASE EMPLOYEE LIMITATION ----------")
+# Employee object cannot use subclass-specific methods:
+# emp.write_code() -----> AttributeError: 'Employee' object has no attribute 'write_code'
+
+
+
 # =========== Part E - super() and shared initialization =========
 
 # 1 - 4. Create a base class Device with brand and year
@@ -61,8 +99,33 @@ print(f"Device: {marinas_phone.brand}, {marinas_phone.year}, Screen: {marinas_ph
 
 
 
+# ========== Part G - Override and still use the base method =========
+
+class Report:
+    def __init__(self, title):
+        self.title = title
+
+    def get_summary(self):
+        return f"Report: {self.title}"
+
+class SalesReport(Report):
+    def __init__(self, title, total_sales):
+        super().__init__(title)
+        self.total_sales = total_sales
+
+    def get_summary(self):
+        return super().get_summary() + f", Total Sales: ${self.total_sales}"
+
+quarterly_report = SalesReport("Q3 Performance", 150000)
+
+print(f"\n-------- REPORT SUMMARY ----------")
+print(quarterly_report.get_summary())
+
+
+
 # ========== Part H - Applied challenge: User accounts ===============
 
+# 1-9 Users challenge
 class User:
     def __init__(self, username, email):
         self.username = username
@@ -95,7 +158,7 @@ class PremiumUser(User):
         self.title = title
 
     def welcome_message(self):
-        print(f"Welcome, {self.title} {self.username}")
+        print(f"Welcome, {self.title} {self.username}!")
 
     def create_nickname(self):
         return self.title.lower() + "_" + super().create_nickname()
@@ -113,4 +176,8 @@ print(f"Premium user nickname: {premium_guest.create_nickname()}")
 print(f"\n-------- SUBCLASS METHODS ----------")
 tech_admin.block_user("BadUser99")
 premium_guest.welcome_message()
- 
+
+
+# 10. Explain why AdminUser and PremiumUser have an "is-a" relationship with User
+# Admin and Premium users IS-A specific type of User. 
+# They inherit all from an User and can extend User with own features
