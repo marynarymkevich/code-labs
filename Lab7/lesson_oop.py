@@ -238,17 +238,26 @@ for student in math.students:
 
 # 1-3. Student class with name, score and status method
 class Student:
+    # Part G === 4. Class attribute
+    # 70 points are standard for all students, so it is useful to have them here not in a separate Student instance
+    passing_score = 70
+
     def __init__(self, name, score):
         self.name = name
 
         # 8. Validation using ValueError
         if score < 0 or score > 100:
             raise ValueError(f"Invalid score for {name}: {score}")
-        
         self.score = score
 
+    # Part G == 1. Add a method that updates a student's score with validation
+    def set_score(self, new_score):
+        if new_score < 0 or new_score > 100:
+            raise ValueError(f"Invalid score for {self.name}: {new_score}")
+        self.score = new_score
+
     def get_status(self):
-        if self.score >= 70:
+        if self.score >= self.passing_score:
             return "PASS"
         else:
             return "FAIL"
@@ -280,6 +289,14 @@ class Course:
                 passed_students.append(student)
         return passed_students
 
+    # Part G == A method finds students above a score threshold
+    def get_students_above_threshold(self, threshold):
+        high_scorers = []
+        for student in self.students:
+            if student.score > threshold:
+                high_scorers.append(student)
+        return high_scorers
+
 
 # 9. Create Teacher, Course, and at least five Student objects
 teacher = Teacher("Dr. Smith")
@@ -308,3 +325,21 @@ passed_students = python_course.get_passed_students()
 print("Passed Students:")
 for student in passed_students:
     print(f"{student.name} ({student.score} points)")
+
+
+
+# =========== Part G ==============
+
+# 3. Another Course object, show that its student list is separate from the first course
+logic_course = Course("Logics", Teacher("Anastasia"))
+logic_course.add_student(Student("Oleg", 30))
+logic_course.add_student(Student("Loana", 40))
+
+print(f"\n ------ STUDENTS COMPARING --------")
+print(f"Course: {logic_course.name} with students: ")
+for student in logic_course.students:
+    print(f"{student.name}")
+
+print(f"Course: {math.name} with students: ")
+for student in math.students:
+    print(f"{student.name}")
