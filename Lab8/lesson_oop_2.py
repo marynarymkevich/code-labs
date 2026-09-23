@@ -1,3 +1,95 @@
+# ======== Part A - Mutable default arguments =============================
+
+# 1 - 2. BadTeam class with name and a default parameter members=[]
+class BadTeam:
+    def __init__(self, name, members=[]):
+        self.name = name
+        self.members = members
+
+    def add_member(self, member_name):
+        self.members.append(member_name)
+
+
+# Test with two BadTeam objects without providing a members list
+bad_team1 = BadTeam("Alpha")
+bad_team2 = BadTeam("Beta")
+
+bad_team1.add_member("Anna")
+
+print("-------- BAD TEAM ----------")
+print(f"Bad Team 1 members: {bad_team1.members}")
+print(f"Bad Team 2 members: {bad_team2.members}")
+
+# Explanation:
+# What happened: Default parameters are created only once when the class is created
+# so both bad_team1 and bad_team2 got the same list in memory
+# Adding a member to team 1 also adds it to team 2 (because of the same link to memory slot)
+
+
+# 3 - 4. Corrected Team class using None as default parameter
+class Team:
+    def __init__(self, name, members=None):
+        self.name = name
+        if members is None:
+            self.members = []
+        else:
+            self.members = members
+
+    def add_member(self, member_name):
+        self.members.append(member_name)
+
+
+# Test with two Team objects
+good_team1 = Team("Alpha")
+good_team2 = Team("Beta")
+
+good_team1.add_member("Anna")
+
+print("\n-------- CORRECTED TEAM (NOT SHARED) ----------")
+print(f"Good Team 1 members: {good_team1.members}")
+print(f"Good Team 2 members: {good_team2.members}")
+
+
+
+# ========== Part B - Dictionary or class? ================================
+
+# 1. Represent a movie using a dictionary
+movie_dict = {
+    "title": "Inception",
+    "director": "Christopher Nolan",
+    "rating": 8.8
+}
+
+print("-------- MOVIE DICTIONARY ----------")
+print(f"Title: {movie_dict['title']}, Rating: {movie_dict['rating']}")
+
+
+# 2 - 3. Represent movie using a Movie class
+class Movie:
+    def __init__(self, title, director, rating):
+        self.title = title
+        self.director = director
+        self.rating = rating
+
+    # whether the movie is highly rated
+    def is_highly_rated(self):
+        return self.rating >= 8.0
+
+
+movie1 = Movie("Inception", "Christopher Nolan", 8.8)
+movie2 = Movie("The Room", "Tommy Wiseau", 3.7)
+
+print("\n-------- MOVIE CLASS ----------")
+print(f"Is '{movie1.title}' highly rated? {movie1.is_highly_rated()}")
+print(f"Is '{movie2.title}' highly rated? {movie2.is_highly_rated()}")
+
+
+# 4. Explanation:
+# A dictionary is for simple data, it has only key-value pairs without any methods
+# A class is nessessary when we need custom behavior/methods (like is_highly_rated), validation, etc
+
+
+
 # ================ Part C - Inheritance fundamentals =============
 
 # 1 - 4. Accounts
@@ -14,7 +106,7 @@ class SavingAccount(Account):
 kid_account = SavingAccount('Kid', 200, 1.5)
 family_account = SavingAccount('Dad', 30000, 2)
 
-print(f"----- ACOUNTS -------")
+print(f"\n------------- ACOUNTS -------------------")
 print(f"Kid's account owner: {kid_account.owner} with balance: {kid_account.balance}, rate: {kid_account.interest_rate}")
 print(f"Family's account owner: {family_account.owner} with balance: {family_account.balance}, rate: {family_account.interest_rate}")
 
@@ -58,7 +150,7 @@ print(f"\n-------- SUBCLASS-SPECIFIC METHODS ----------")
 dev.write_code()
 mgr.conduct_meeting()
 
-print(f"\n-------- BASE EMPLOYEE LIMITATION ----------")
+# print(f"\n-------- BASE EMPLOYEE LIMITATION ----------")
 # Employee object cannot use subclass-specific methods:
 # emp.write_code() -----> AttributeError: 'Employee' object has no attribute 'write_code'
 
@@ -84,6 +176,7 @@ class Laptop(Device):
         super().__init__(brand, year)
         self.ram_gb = ram_gb
 
+
 class Phone(Device):
     def __init__(self, brand, year, screen_size):
         super().__init__(brand, year)
@@ -93,14 +186,50 @@ marinas_laptop = Laptop("Mac", 2022, 512)
 marinas_phone = Phone("Pixel", 2025, 5.6)
 
 # 5. Both subclasses receive the shared initialization logic from Device without duplicating
-print(f"\n-------- Devices comparing ----------")
+print(f"\n-------- DEVICES COMPARING ----------")
 print(f"Device: {marinas_laptop.brand}, {marinas_laptop.year}, Ram: {marinas_laptop.ram_gb}, Active status: {marinas_laptop.is_active} ")
 print(f"Device: {marinas_phone.brand}, {marinas_phone.year}, Screen: {marinas_phone.screen_size}, Active status: {marinas_phone.is_active} ")
 
 
 
+# ========== Part F - Method overriding ===================================
+
+# 1 - 4. Notifications objects
+class Notification:
+    def send(self):
+        return "Sending a general notification"
+
+
+class EmailNotification(Notification):
+    def send(self):
+        return "Sending email notification to user..."
+
+
+class SMSNotification(Notification):
+    def send(self):
+        return "Sending SMS notification to phone..."
+
+
+general_notif = Notification()
+email_notif = EmailNotification()
+sms_notif = SMSNotification()
+
+print(f"\n-------- NOTIFICATIONS COMPARING ----------")
+print(general_notif.send())
+print(email_notif.send())
+print(sms_notif.send())
+
+
+# 5. Explaining:
+# When send() is called, Python checks the specific object first
+# So general_notif uses Notification.send() because it's a base Notification object.
+# And email_notif and sms_notif call their own send() methods
+
+
+
 # ========== Part G - Override and still use the base method =========
 
+# 1 - 4
 class Report:
     def __init__(self, title):
         self.title = title
