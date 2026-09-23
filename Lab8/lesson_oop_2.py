@@ -28,7 +28,7 @@ print(f"Family's account owner: {family_account.owner} with balance: {family_acc
 
 # =========== Part E - super() and shared initialization =========
 
-# 1. Create a base class Device with brand and year
+# 1 - 4. Create a base class Device with brand and year
 class Device:
     def __init__(self, brand, year):
         self.brand = brand
@@ -37,7 +37,9 @@ class Device:
         # year cannot be negative
         if year < 0:
             raise ValueError("Year cannot be negative!")
+        
         self.year = year
+       
         
 class Laptop(Device):
     def __init__(self, brand, year, ram_gb):
@@ -56,4 +58,59 @@ marinas_phone = Phone("Pixel", 2025, 5.6)
 print(f"\n-------- Devices comparing ----------")
 print(f"Device: {marinas_laptop.brand}, {marinas_laptop.year}, Ram: {marinas_laptop.ram_gb}, Active status: {marinas_laptop.is_active} ")
 print(f"Device: {marinas_phone.brand}, {marinas_phone.year}, Screen: {marinas_phone.screen_size}, Active status: {marinas_phone.is_active} ")
+
+
+
+# ========== Part H - Applied challenge: User accounts ===============
+
+class User:
+    def __init__(self, username, email):
+        self.username = username
+
+        if '@' not in email:
+            raise ValueError("Invalid email!")  # will break the programm 
         
+        self.email = email
+
+    def create_nickname(self):
+        self.nickname = self.username.lower()[:3] + '_nick'
+        return self.nickname
+
+
+class AdminUser(User):
+    def __init__(self, username, email, department):
+        super().__init__(username, email)
+        self.department = department
+
+    def block_user(self, block_username):
+        print(f"User {block_username} is blocked!")
+
+    def create_nickname(self):
+        return super().create_nickname() + '_admin'
+
+
+class PremiumUser(User):
+    def __init__(self, username, email, title):
+        super().__init__(username, email)
+        self.title = title
+
+    def welcome_message(self):
+        print(f"Welcome, {self.title} {self.username}")
+
+    def create_nickname(self):
+        return self.title.lower() + "_" + super().create_nickname()
+
+
+standard_user = User("Bob", "bob@mail.com")
+tech_admin = AdminUser("John", "john@mail.com", "Tech")
+premium_guest = PremiumUser("Alex", "alex@mail.com", "Mr")
+
+print(f"\n-------- USERS COMPARING ----------")
+print(f"User nickname: {standard_user.create_nickname()}")
+print(f"Admin nickname: {tech_admin.create_nickname()}")
+print(f"Premium user nickname: {premium_guest.create_nickname()}")
+
+print(f"\n-------- SUBCLASS METHODS ----------")
+tech_admin.block_user("BadUser99")
+premium_guest.welcome_message()
+ 
