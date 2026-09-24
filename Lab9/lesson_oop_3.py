@@ -53,7 +53,7 @@ class SavingsAccount(Account):
 
 simple_account = Account('Kid', 200)
 saving_account = SavingsAccount('Alex', 30000, 2)
-print("--------- ACCOUNTS COMPARING --------")
+print("\n--------- ACCOUNTS COMPARING --------")
 print("Simple account: ", simple_account)
 print("Saving account: ", saving_account)
 
@@ -61,6 +61,7 @@ print("Saving account: ", saving_account)
 
 # ============ Part H - Applied challenge: Export system ================
 
+# 1 - 6
 class Exporter:
     def export(self, data):
         return f"Exporting data: {data}"
@@ -99,3 +100,55 @@ exporters_list = [
     TextExporter(),
     SummaryExporter()
 ]
+
+
+# 7. Loop through the list and call export()
+sample_data = "User is logged in"
+
+print("\n---- EXPORT SYSTEM POLYMORPHISM -------")
+for exporter in exporters_list:
+    print(f"Using {exporter}:")
+    print(exporter.export(sample_data))
+    print()
+
+
+# 8. Create an independent class (not inheriting from Exporter) with export() method (Duck Typing)
+class DatabaseLogger:
+    def __init__(self, db_name):
+        self.db_name = db_name
+
+    def export(self, data):
+        return f"[DATABASE: {self.db_name}] Data: '{data}'"
+
+    def __str__(self):
+        return f"Database Logger ({self.db_name})"
+
+
+db_logger = DatabaseLogger("production_db")
+exporters_list.append(db_logger)
+
+print("------ DUCK TYPING DEMO ----------------")
+for exporter in exporters_list:
+    print(exporter.export(sample_data))
+
+
+# 9. Use isinstance() to inspect type relationship
+print("\n------ ISINSTANCE CHECK ------------")
+text_exp = TextExporter()
+
+print(f"Is text_exp an instance of TextExporter? {isinstance(text_exp, TextExporter)}")
+print(f"Is text_exp an instance of Exporter? {isinstance(text_exp, Exporter)}")
+print(f"Is db_logger an instance of Exporter? {isinstance(db_logger, Exporter)}")
+
+
+# 10. Example of composition (HAS-A relationship)
+class DataManager:
+    def __init__(self, exporter):
+        self.exporter = exporter 
+
+    def process_and_export(self, data):
+        cleaned_data = str(data).strip()
+        return self.exporter.export(cleaned_data)
+
+# DataManager HAS-A Exporter.
+# DataManager is not an Exporter, but it HAS An Exporter object inside
