@@ -31,6 +31,101 @@ for notification in notifications:
 
 
 
+# ========== Part B - Polymorphism with inheritance ============
+
+# 1. Base class Document
+class Document:
+    def __init__(self, title):
+        self.title = title
+
+    def describe(self):
+        return f"Generic document: {self.title}"
+
+
+# 2 - 3. Subclasses PDFDocument and TextDocument overriding describe()
+class PDFDocument(Document):
+    def describe(self):
+        return f"PDF File '{self.title}' (formatted for printing and reading)"
+
+
+class TextDocument(Document):
+    def describe(self):
+        return f"Text File '{self.title}' (editable plain text format)"
+
+
+# 4. Create several PDFDocument and TextDocument objects in one list
+documents = [
+    PDFDocument("Annual Report"),
+    TextDocument("Notes"),
+    PDFDocument("User Manual"),
+    TextDocument("Todo List")
+]
+
+# 5. Loop through the list and print each document's title and the result of describe().
+print("\n-------- POLYMORPHISM WITH INHERITANCE -------------")
+for doc in documents:
+    print(f"Title: {doc.title} | Description: {doc.describe()}")
+
+
+
+# ========== Part C - Duck typing ========================================
+
+# 1 - 2. Create two unrelated classes with display_status() method
+class Printer:
+    def display_status(self):
+        return "Printer status: Ready to print."
+
+
+class Screen:
+    def display_status(self):
+        return "Screen status: Displaying..."
+
+
+# 3. Create objects from both classes and store them in the same list
+devices = [Printer(), Screen(), Printer(), Screen()]
+
+# 4. Loop through the list and call display_status() on each object
+print("\n----------- DUCK TYPING -------------")
+for device in devices:
+    print(device.display_status())
+
+
+# 5. Explanation:
+# Python doesn't care about object's class or inheritance,
+# it only checks if the method exists on the object 
+
+
+
+# ========== Part D - isinstance() =======================================
+
+# 1. Base class User and subclass AdminUser
+class User:
+    pass
+
+class AdminUser(User):
+    pass
+
+
+# 2. Create AdminUser object
+admin = AdminUser()
+
+# 3 - 4. Use isinstance() to check types and print results
+is_admin = isinstance(admin, AdminUser)
+is_user = isinstance(admin, User)
+is_str = isinstance(admin, str)
+
+print("\n------------- ISINSTANCE CHECK ----------------")
+print(f"Is admin an AdminUser? {is_admin}")
+print(f"Is admin a User? {is_user}")
+print(f"Is admin a string? {is_str}")
+
+
+# 5. Explanation:
+# The AdminUser object is also an instance of User because AdminUser 
+# inherits from User. 
+
+
+
 # ============== Part E - __str__ =======================================
 
 # 1. Product class
@@ -42,7 +137,7 @@ class Product:
 
 # 2. Create one Product object and print it before defining __str__
 test_prod = Product("Laptop", 1200)
-print("-------- PRINT PRODUCT BEFORE __str__ -------------")
+print("\n-------- PRINT PRODUCT BEFORE __str__ -------------")
 print(test_prod) #   --->    <__main__.Product object at 0x10439c980>
 
 
