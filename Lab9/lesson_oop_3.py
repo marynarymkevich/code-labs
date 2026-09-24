@@ -51,10 +51,51 @@ class SavingsAccount(Account):
     def __str__(self):
         return (f"{super().__str__()}, Interest rate: {self.interest_rate}")
 
-
 simple_account = Account('Kid', 200)
 saving_account = SavingsAccount('Alex', 30000, 2)
 print("--------- ACCOUNTS COMPARING --------")
 print("Simple account: ", simple_account)
 print("Saving account: ", saving_account)
 
+
+
+# ============ Part H - Applied challenge: Export system ================
+
+class Exporter:
+    def export(self, data):
+        return f"Exporting data: {data}"
+
+    def __str__(self):
+        return "Base Exporter"
+
+
+class ConsoleExporter(Exporter):
+    def export(self, data):
+        return f"[CONSOLE OUTPUT] -> {data}"
+
+    def __str__(self):
+        return "Console Exporter"
+
+
+class TextExporter(Exporter):
+    def export(self, data):
+        return f"[TEXT FILE] Saving line: '{data}'"
+
+    def __str__(self):
+        return "Text Exporter"
+
+
+class SummaryExporter(Exporter):
+    def export(self, data):
+        words_count = len(str(data).split())
+        return f"[SUMMARY] Data contains {words_count} words. Content: {data}"
+
+    def __str__(self):
+        return "Summary Exporter"
+
+
+exporters_list = [
+    ConsoleExporter(),
+    TextExporter(),
+    SummaryExporter()
+]
