@@ -31,6 +31,51 @@ for notification in notifications:
 
 
 
+# ============== Part E - __str__ =======================================
+
+# 1. Product class
+class Product:
+    def __init__(self, name, price):
+        self.name = name
+        self.price = price
+
+
+# 2. Create one Product object and print it before defining __str__
+test_prod = Product("Laptop", 1200)
+print("-------- PRINT PRODUCT BEFORE __str__ -------------")
+print(test_prod) #   --->    <__main__.Product object at 0x10439c980>
+
+
+# 3. Product class with __str__
+class Product:
+    def __init__(self, name, price):
+        self.name = name
+        self.price = price
+
+    def __str__(self):
+        return f"Product: {self.name}, Price: ${self.price}"
+
+
+# 4. Create at least three Product objects and print them
+prod1 = Product("Mouse", 25)
+prod2 = Product("Keyboard", 60)
+prod3 = Product("Monitor", 300)
+
+print("\n-------- PRINT PRODUCT AFTER __str__ ----------")
+print(prod1)
+print(prod2)
+print(prod3)
+
+
+# 5. Use str() on one Product object, store the result in a variable and print its type
+product_string = str(prod1)
+
+print("\n--------- CHECKING STR TYPE ----------")
+print(f"Value: {product_string}")
+print(f"Type: {type(product_string)}")
+
+
+
 # ============= Part F - __str__ with inheritance =================
 
 # 1 - 2. Create a base class Account with owner and balance and Add __str__ to Account
@@ -56,6 +101,42 @@ saving_account = SavingsAccount('Alex', 30000, 2)
 print("\n--------- ACCOUNTS COMPARING --------")
 print("Simple account: ", simple_account)
 print("Saving account: ", saving_account)
+
+
+
+# ========= Part G - Inheritance or composition? ======================
+
+# 1. Create CPU with a model attribute
+class CPU:
+    def __init__(self, model):
+        self.model = model
+
+
+# 2 - 3. Create Computer
+class Computer:
+    def __init__(self, brand, cpu_object):
+        self.brand = brand
+        self.cpu = cpu_object
+
+my_cpu = CPU("Intel i7")
+my_computer = Computer("Asus", my_cpu)
+
+
+# 4. Print the computer brand and CPU model
+print("\n---------- COMPUTER AND CPU -----------------")
+print(f"Computer brand: {my_computer.brand}, CPU model: {my_computer.cpu.model}")
+
+# 5. Explanation:
+# "Computer HAS-A CPU" makes more sense than "Computer IS-A CPU" because 
+# the computer is complex system that contains CPU as one of its components, 
+# the computer is not a type of CPU
+
+
+# 6. Categorization for pairs:
+# Car / Engine - Composition (HAS-A) -> A Car HAS-An Engine
+# Manager / Employee - Inheritance (IS-A) -> A Manager IS-An Employee
+# Course / Teacher - Composition (HAS-A) -> A Course HAS-A Teacher
+# Phone / Device - Inheritance (IS-A) -> A Phone IS-A Device
 
 
 
