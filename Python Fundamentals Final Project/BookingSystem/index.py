@@ -18,6 +18,27 @@ selected_room_number = None
 number_of_nights = None
 available_rooms = [room for room in rooms if room.get_availability()]
 
+def display_menu():
+    print("\n" + "="*30)
+    print(" BOOKING SYSTEM MENU ")
+    print("="*30)
+    print("1. View available rooms")
+    print("2. Book a room")
+    print("3. View my bookings")
+    print("4. Exit")
+    print("="*30)
+
+while True:
+    display_menu()
+    choice = input("Please enter a number of the action for you (1-4): ")
+
+    if choice == "1":
+        pass
+    elif choice == "2":
+        pass
+    else:
+        print("\nInvalid choice! Please enter a number between 1 and 4.")
+
 print(f"\n***Welcome! Below you can see all our available rooms.***\n")
 for room in available_rooms:
     print(f"{room}")
@@ -53,6 +74,8 @@ def get_number_of_nights():
             print("Please enter a valid number of nights.")
 
 number_of_nights = get_number_of_nights()
+
+
 
 for room in rooms:
     if room.room_number == selected_room_number:
