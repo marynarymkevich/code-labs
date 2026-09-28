@@ -1,7 +1,9 @@
 class Customer:
-    def __init__(self, firstname, lastname, number_of_nights):
+    def __init__(self, firstname, lastname):
         self.firstname = firstname
         self.lastname = lastname
-        self.number_of_nights = number_of_nights
+
+    def generate_id(self):
+        self.id = self.firstnamer[:3] + self.lastname[:3] + "_id" # TODO: generate unique id
 
     
