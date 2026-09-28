@@ -3,9 +3,13 @@ class Room:
         self.room_number = room_number
         self.type = type
         self.max_number_of_persons = max_number_of_persons
+        self.is_available = True
 
-    def setAvailability(self, isAvailable):
-        self.isAvailable = isAvailable
+    def __str__(self):
+        return f"Room #{self.room_number}, {self.type} for maximum {self.max_number_of_persons} guests"
 
-    def getAvailability(self):
-        return self.isAvailable
+    def set_availability(self, isAvailable):
+        self.is_available = isAvailable
+
+    def get_availability(self):
+        return self.is_available

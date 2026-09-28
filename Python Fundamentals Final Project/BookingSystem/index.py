@@ -10,6 +10,20 @@ rooms = [
     Room(203, "Penthouse", 5)
 ]
 
+available_rooms = [room for room in rooms if room.get_availability()]
 
-print(f"Welcome, dear customer. Below you can see all our available room. Please enter the room number you want to book. ")
-print(f"\n")
+
+print(f"\n***Welcome, dear customer. Below you can see all our available rooms. Please enter the room number you want to book.***\n")
+for room in available_rooms:
+    print(f"{room}")
+
+selected_number = int(input("Enter room number: "))
+
+for room in rooms:
+    if room.room_number == selected_number:
+        if room.get_availability():
+            room.set_availability(False)
+            print(f"Great! Room {room.room_number} is now booked for you")
+        else:
+            print("Sorry, this room is unavailable more")
+        break
