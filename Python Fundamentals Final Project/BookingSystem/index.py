@@ -28,21 +28,6 @@ def display_menu():
     print("4. Exit")
     print("="*30)
 
-while True:
-    display_menu()
-    choice = input("Please enter a number of the action for you (1-4): ")
-
-    if choice == "1":
-        pass
-    elif choice == "2":
-        pass
-    else:
-        print("\nInvalid choice! Please enter a number between 1 and 4.")
-
-print(f"\n***Welcome! Below you can see all our available rooms.***\n")
-for room in available_rooms:
-    print(f"{room}")
-
 def get_customer():
     print(f"\nTo make a reservation we need to know your name")
 
@@ -52,16 +37,12 @@ def get_customer():
 
     return Customer(customer_first_name, customer_last_name)
 
-current_customer = get_customer()
-
 def get_room_number():
     while True:
         try:
             return int(input("Enter room number to reserve: "))
         except ValueError:
             print("Please enter a valid room number.")
-
-selected_room_number = get_room_number()
 
 def get_number_of_nights():
     while True:
@@ -73,18 +54,41 @@ def get_number_of_nights():
         except ValueError:
             print("Please enter a valid number of nights.")
 
-number_of_nights = get_number_of_nights()
+# Main menu
+while True:
+    display_menu()
+    choice = input("Please enter a number of the action for you (1-4): ")
 
+    if choice == "1":
+        print(f"\n***Our available rooms***\n")
+        for room in available_rooms:
+            print(f"{room}")
 
-
-for room in rooms:
-    if room.room_number == selected_room_number:
-        if room.get_availability():
-            room.set_availability(False)
-            bookings.append(Booking(room, current_customer, number_of_nights))
-            print(f"Great! Room {room.room_number} is now booked for you, {current_customer.firstname}")
+    elif choice == "2":
+        current_customer = get_customer()
+        selected_room_number = get_room_number()
+        number_of_nights = get_number_of_nights()
+        for room in rooms:
+            if room.room_number == selected_room_number:
+                if room.get_availability():
+                    room.set_availability(False)
+                    bookings.append(Booking(room, current_customer, number_of_nights))
+                    print(f"Great! Room {room.room_number} is now booked for you, {current_customer.firstname}")
+                else:
+                    print("Sorry, this room is unavailable more")
+                break
         else:
-            print("Sorry, this room is unavailable more")
-        break
-else:
-    print(f"No room with this number")    
+            print(f"No room with this number") 
+    else:
+        print("\nInvalid choice! Please enter a number between 1 and 4.")
+
+
+
+
+
+
+
+
+
+
+   
