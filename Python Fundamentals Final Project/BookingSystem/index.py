@@ -25,7 +25,8 @@ def display_menu():
     print("1. View available rooms")
     print("2. Book a room")
     print("3. View my bookings")
-    print("4. Exit")
+    print("4. Cancel a booking")
+    print("5. Exit")
     print("="*30)
 
 def show_available_rooms():
@@ -64,6 +65,13 @@ def get_number_of_nights():
         except ValueError:
             print("Please enter a valid number of nights.")
 
+def show_customers_bookings():
+    if bookings:
+        for index, booking in enumerate(bookings, start=1):
+            print(f"{index}. {booking}")
+    else:
+        print("You don't have bookings yet.")
+
 # Main menu
 while True:
     display_menu()
@@ -90,12 +98,17 @@ while True:
         else:
             print(f"No room with this number") 
     elif choice == "3":
-        if len(bookings):
-            for booking in bookings:
-                print(booking)
-        else:
-            print(f"You don't have bookings yet")
+        show_customers_bookings()
     elif choice == "4":
+        show_customers_bookings()
+        booking_number = input("Please enter the number of booking you want to cancel: ")
+        room_number_for_canceling = bookings[room_number_for_canceling].room.room_number 
+        bookings[booking_number].remove()
+        for room in rooms:
+            if room.room_number == room_number_for_canceling:
+                room.set_availability(True)
+                
+    elif choice == "5":
         print("\nThank you for using our Booking System. Bye!")
         break
     else:
