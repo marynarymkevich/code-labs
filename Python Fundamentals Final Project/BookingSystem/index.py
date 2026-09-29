@@ -75,7 +75,7 @@ def show_customers_bookings():
 # Main menu
 while True:
     display_menu()
-    choice = input(f"Please enter a number of the action for you (1-4): \n\n\n")
+    choice = input(f"Please enter a number of the action for you (1-5): \n\n\n")
 
     if choice == "1":
         show_available_rooms()
@@ -100,14 +100,25 @@ while True:
     elif choice == "3":
         show_customers_bookings()
     elif choice == "4":
-        show_customers_bookings()
-        booking_number = input("Please enter the number of booking you want to cancel: ")
-        room_number_for_canceling = bookings[room_number_for_canceling].room.room_number 
-        bookings[booking_number].remove()
-        for room in rooms:
-            if room.room_number == room_number_for_canceling:
-                room.set_availability(True)
-                
+        if not bookings:
+            print("\nYou don't have active bookings to cancel.")
+        else:
+            show_customers_bookings()
+            while True:
+                try:
+                    user_input = int(input("\nPlease enter the number of booking you want to cancel: "))
+                    booking_index = user_input - 1
+                    
+                    if 0 <= booking_index < len(bookings):
+                        cancelled_booking = bookings.pop(booking_index)
+                        cancelled_booking.room.set_availability(True)
+                        
+                        print(f"\nBooking for Room #{cancelled_booking.room.room_number} successfully cancelled!")
+                        break
+                    else:
+                        print(f"Please enter a number between 1 and {len(bookings)}.")
+                except ValueError:
+                    print("Please enter a valid number.")
     elif choice == "5":
         print("\nThank you for using our Booking System. Bye!")
         break
