@@ -72,6 +72,29 @@ def get_number_of_nights():
         except ValueError:
             print("Please enter a valid number of nights.")
 
+def make_reservation(current_customer, selected_room_number, number_of_nights):
+    for room in rooms:
+        if room.room_number == selected_room_number:
+            if room.get_availability():
+                room.set_availability(False)
+                bookings.append(Booking(room, current_customer, number_of_nights))
+                print(f"\nGreat! Room {room.room_number} is now booked for you, {current_customer.firstname}")
+            else:
+                print("Sorry, this room is unavailable more")
+            break
+    else:
+        print(f"No room with this number") 
+
+def cancel_reservation(booking_index):
+    if 0 <= booking_index < len(bookings):
+        cancelled_booking = bookings.pop(booking_index)
+        cancelled_booking.room.set_availability(True)
+        print(f"\nBooking for Room #{cancelled_booking.room.room_number} successfully cancelled!")
+        return True
+    else:
+        print(f"Please enter a number between 1 and {len(bookings)}.")
+        return False
+
 def show_customers_bookings():
     if bookings:
         for index, booking in enumerate(bookings, start=1):
@@ -93,17 +116,8 @@ while True:
 
         selected_room_number = get_room_number()
         number_of_nights = get_number_of_nights()
-        for room in rooms:
-            if room.room_number == selected_room_number:
-                if room.get_availability():
-                    room.set_availability(False)
-                    bookings.append(Booking(room, current_customer, number_of_nights))
-                    print(f"\nGreat! Room {room.room_number} is now booked for you, {current_customer.firstname}")
-                else:
-                    print("Sorry, this room is unavailable more")
-                break
-        else:
-            print(f"No room with this number") 
+
+        make_reservation(current_customer, selected_room_number, number_of_nights)
     elif choice == "3":
         show_customers_bookings()
     elif choice == "4":
@@ -115,22 +129,15 @@ while True:
                 try:
                     user_input = int(input("\nPlease enter the number of booking you want to cancel: "))
                     booking_index = user_input - 1
-                    
-                    if 0 <= booking_index < len(bookings):
-                        cancelled_booking = bookings.pop(booking_index)
-                        cancelled_booking.room.set_availability(True)
-                        
-                        print(f"\nBooking for Room #{cancelled_booking.room.room_number} successfully cancelled!")
+                    if cancel_reservation(booking_index):
                         break
-                    else:
-                        print(f"Please enter a number between 1 and {len(bookings)}.")
                 except ValueError:
                     print("Please enter a valid number.")
     elif choice == "5":
         print("\nThank you for using our Booking System. Bye!")
         break
     else:
-        print("\nInvalid choice! Please enter a number between 1 and 4.")
+        print("\nInvalid choice! Please enter a number between 1 and 5.")
 
 
 
