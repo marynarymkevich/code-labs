@@ -7,7 +7,7 @@ class Room:
         self.is_available = True
 
     def __str__(self):
-        return f"Room #{self.room_number} ({self.room_type}) - ${self.price_per_night}/night | max {self.max_number_of_persons} guests"
+        return f"Room #{self.room_number} ({self.room_type}) - ${self.price_per_night}/night"
 
     def set_availability(self, is_available):
         self.is_available = is_available
