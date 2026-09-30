@@ -1,5 +1,5 @@
 from models.customer import Customer
-from booking_services import bookings, show_available_rooms, make_reservation, cancel_reservation, show_customers_bookings, show_search_results
+from booking_services import bookings, show_available_rooms, make_reservation, cancel_reservation, show_customers_bookings, show_search_results, find_rooms_by_capacity
 
 current_customer = None
 
@@ -18,8 +18,8 @@ def display_menu():
 def get_customer():
     print(f"\nTo make a reservation we need to know your name")
 
-    customer_first_name = input("Please enter your first name: ")
-    customer_last_name = input("Please enter your last name: ")
+    customer_first_name = input("Please enter your first name: ").strip()
+    customer_last_name = input("Please enter your last name: ").strip()
     print(f"Nice to see you, {customer_first_name} {customer_last_name}")
 
     return Customer(customer_first_name, customer_last_name)
@@ -35,6 +35,8 @@ def search_rooms_menu():
     if search_choice == "1":
         try:
             persons = int(input("How many guests? "))
+            results = find_rooms_by_capacity(persons)
+            show_search_results(results)
         except ValueError:
             print("Please enter a valid number.")
             
@@ -65,13 +67,13 @@ def get_number_of_nights():
 # Main menu
 while True:
     display_menu()
-    choice = input(f"Please enter a number of the action for you (1-6): \n\n\n")
+    choice = input(f"Please enter a number of the action for you (1-6): \n\n\n").strip()
 
     if choice == "1":
         show_available_rooms()
 
     if choice == "2":
-        show_search_results([])
+        search_rooms_menu()
 
     elif choice == "3":
         if current_customer is None:

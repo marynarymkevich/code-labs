@@ -54,3 +54,9 @@ def show_search_results(found_rooms):
         print(f"\nFound {len(found_rooms)} room(s):\n")
         for room in found_rooms:
             print(room)
+
+def find_rooms_by_capacity(guests_number):
+    return [
+        room for room in rooms 
+        if room.get_availability() and room.max_number_of_persons >= guests_number
+    ]
