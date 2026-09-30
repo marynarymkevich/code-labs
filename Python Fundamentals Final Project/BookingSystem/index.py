@@ -1,5 +1,5 @@
 from models.customer import Customer
-from booking_services import bookings, show_available_rooms, make_reservation, cancel_reservation, show_customers_bookings
+from booking_services import bookings, show_available_rooms, make_reservation, cancel_reservation, show_customers_bookings, show_search_results
 
 current_customer = None
 
@@ -44,14 +44,6 @@ def search_rooms_menu():
     elif search_choice == "3":
         pass
 
-def show_results(found_rooms):
-    if not found_rooms:
-        print("\nNo matching rooms found.")
-    else:
-        print(f"\nFound {len(found_rooms)} room(s):\n")
-        for room in found_rooms:
-            print(room)
-
 def get_room_number():
     while True:
         try:
@@ -79,7 +71,7 @@ while True:
         show_available_rooms()
 
     if choice == "2":
-            show_available_rooms()
+        show_search_results([])
 
     elif choice == "3":
         if current_customer is None:

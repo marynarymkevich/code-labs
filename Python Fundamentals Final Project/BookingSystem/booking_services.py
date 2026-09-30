@@ -13,7 +13,6 @@ def show_available_rooms():
         for room in available_rooms:
             print(room)
 
-
 def make_reservation(current_customer, selected_room_number, number_of_nights):
     for room in rooms:
         if room.room_number == selected_room_number:
@@ -47,3 +46,11 @@ def show_customers_bookings():
             print(f"\n{index}. {booking}")
     else:
         print("You don't have bookings yet.")
+
+def show_search_results(found_rooms):
+    if not found_rooms:
+        print("\nNo matching rooms found.")
+    else:
+        print(f"\nFound {len(found_rooms)} room(s):\n")
+        for room in found_rooms:
+            print(room)
