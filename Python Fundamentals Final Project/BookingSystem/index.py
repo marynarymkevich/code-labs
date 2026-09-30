@@ -37,20 +37,22 @@ def get_customer():
 
 def search_rooms_menu():
     while True:
-        print("\nSearch rooms")
+        print("\n" + "="*15)
+        print("Search rooms")
+        print("="*15)
         print("1. Search by number of guests")
         print("2. Search by maximum price")
         print("3. View VIP rooms only")
         print("4. Exit from rooms searc")
         
-        search_choice = input("Select search option (1-3): ").strip()
+        search_choice = input("Select search option (1-4): ").strip()
         
         if search_choice == "1":
             persons = get_valid_positive_int("How many guests? ", "Enter a valid number of guests")   
             results = find_rooms_by_capacity(persons)
             show_search_results(results)    
         elif search_choice == "2":
-            customer_price = get_valid_positive_int("What the maximum price ($) per night? (min 50$)", "Enter valid price")
+            customer_price = get_valid_positive_int("What the maximum price ($) per night (min 50$)?", "Enter valid price ")
             results = find_rooms_by_price(customer_price)
             show_search_results(results) 
         elif search_choice == "3":
@@ -71,7 +73,7 @@ def get_number_of_nights():
 # Main menu
 while True:
     display_menu()
-    choice = input(f"Please enter a number of the action for you (1-6): \n\n\n").strip()
+    choice = input(f"Please enter a number of the action for you (1-6): \n").strip()
 
     if choice == "1":
         show_available_rooms()
