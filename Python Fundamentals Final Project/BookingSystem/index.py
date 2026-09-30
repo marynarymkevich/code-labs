@@ -1,5 +1,15 @@
 from models.customer import Customer
-from booking_services import bookings, show_available_rooms, make_reservation, cancel_reservation, show_customers_bookings, show_search_results, find_rooms_by_capacity
+from booking_services import (
+    bookings, 
+    show_available_rooms, 
+    make_reservation, 
+    cancel_reservation, 
+    show_customers_bookings, 
+    show_search_results, 
+    find_rooms_by_capacity, 
+    find_rooms_by_price, 
+    find_rooms_by_type
+)
 from utils import get_valid_text, get_valid_positive_int
 
 current_customer = None
@@ -26,24 +36,30 @@ def get_customer():
     return Customer(customer_first_name, customer_last_name)
 
 def search_rooms_menu():
-    print("\nSearch rooms")
-    print("1. Search by number of guests")
-    print("2. Search by maximum price")
-    print("3. View VIP rooms only")
-    
-    search_choice = input("Select search option (1-3): ").strip()
-    
-    if search_choice == "1":
-        persons = get_valid_positive_int("How many guests? ", "Enter a valid number of guests")   
-        results = find_rooms_by_capacity(persons)
-        show_search_results(results)
-           
-            
-    elif search_choice == "2":
-        pass
-            
-    elif search_choice == "3":
-        pass
+    while True:
+        print("\nSearch rooms")
+        print("1. Search by number of guests")
+        print("2. Search by maximum price")
+        print("3. View VIP rooms only")
+        print("4. Exit from rooms searc")
+        
+        search_choice = input("Select search option (1-3): ").strip()
+        
+        if search_choice == "1":
+            persons = get_valid_positive_int("How many guests? ", "Enter a valid number of guests")   
+            results = find_rooms_by_capacity(persons)
+            show_search_results(results)    
+        elif search_choice == "2":
+            customer_price = get_valid_positive_int("What the maximum price ($) per night? (min 50$)", "Enter valid price")
+            results = find_rooms_by_price(customer_price)
+            show_search_results(results) 
+        elif search_choice == "3":
+            results = find_rooms_by_type("VIP")
+            show_search_results(results)
+        elif search_choice == "4":
+            break
+        else:
+            print("\nNo such option. Please select search option (1-3)")
 
 def get_room_number():
     return get_valid_positive_int("Enter room number to reserve: ", "Please enter a valid room number.")

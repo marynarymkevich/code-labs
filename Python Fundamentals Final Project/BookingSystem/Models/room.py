@@ -18,7 +18,7 @@ class Room:
 
 class VIP_Room(Room):
     def __init__(self, room_number, price_per_night, max_number_of_persons=4, has_free_breakfast=True):
-        super().__init__(room_number, "VIP Suite", price_per_night, max_number_of_persons)
+        super().__init__(room_number, "VIP", price_per_night, max_number_of_persons)
         self.has_free_breakfast = has_free_breakfast
 
     def __str__(self):

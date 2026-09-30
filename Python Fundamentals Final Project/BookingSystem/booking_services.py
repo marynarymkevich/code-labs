@@ -1,6 +1,8 @@
 from models.booking import Booking
 from data import rooms
 
+#TODO combine to smth?
+
 bookings = []
 
 def show_available_rooms():
@@ -60,3 +62,15 @@ def find_rooms_by_capacity(guests_number):
         room for room in rooms 
         if room.get_availability() and room.max_number_of_persons >= guests_number
     ]
+
+def find_rooms_by_price(customer_price):
+        return [
+        room for room in rooms 
+        if room.get_availability() and room.price_per_night <= customer_price
+    ]
+
+def find_rooms_by_type(type):
+    return [
+            room for room in rooms 
+            if room.get_availability() and room.room_type == type
+        ]
