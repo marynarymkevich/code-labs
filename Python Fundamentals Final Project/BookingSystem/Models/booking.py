@@ -1,6 +1,3 @@
-from Models.room import Room
-from Models.customer import Customer
-
 class Booking: 
     def __init__(self, room, customer, nights):
         self.room = room

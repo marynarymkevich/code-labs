@@ -1,4 +1,4 @@
-from Models.booking import Booking
+from models.booking import Booking
 from data import rooms
 
 bookings = []
@@ -19,15 +19,19 @@ def make_reservation(current_customer, selected_room_number, number_of_nights):
         if room.room_number == selected_room_number:
             if room.get_availability():
                 room.set_availability(False)
-                bookings.append(Booking(room, current_customer, number_of_nights))
+                new_booking = Booking(room, current_customer, number_of_nights)
+                bookings.append(new_booking)
                 print(f"\nGreat! Room {room.room_number} is now booked for you, {current_customer.firstname}")
+                print(f"\nTotal price for {number_of_nights} night(s): ${new_booking.total_price}")
             else:
                 print("Sorry, this room is unavailable more")
             return
         
     print(f"No room with this number") 
 
-def cancel_reservation(booking_index):
+def cancel_reservation(user_input):
+    booking_index = user_input - 1
+
     if 0 <= booking_index < len(bookings):
         cancelled_booking = bookings.pop(booking_index)
         cancelled_booking.room.set_availability(True)

@@ -1,4 +1,4 @@
-from Models.room import Room, VIP_Room
+from models.room import Room, VIP_Room
 
 rooms = [
     Room(101, "Single", 50, max_number_of_persons=1),
