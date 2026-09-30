@@ -1,5 +1,6 @@
 from models.customer import Customer
 from booking_services import bookings, show_available_rooms, make_reservation, cancel_reservation, show_customers_bookings, show_search_results, find_rooms_by_capacity
+from utils import get_valid_text, get_valid_positive_int
 
 current_customer = None
 
@@ -18,8 +19,8 @@ def display_menu():
 def get_customer():
     print(f"\nTo make a reservation we need to know your name")
 
-    customer_first_name = input("Please enter your first name: ").strip()
-    customer_last_name = input("Please enter your last name: ").strip()
+    customer_first_name = get_valid_text("Please enter your first name: ")
+    customer_last_name = get_valid_text("Please enter your last name: ")
     print(f"Nice to see you, {customer_first_name} {customer_last_name}")
 
     return Customer(customer_first_name, customer_last_name)
@@ -33,12 +34,10 @@ def search_rooms_menu():
     search_choice = input("Select search option (1-3): ").strip()
     
     if search_choice == "1":
-        try:
-            persons = int(input("How many guests? "))
-            results = find_rooms_by_capacity(persons)
-            show_search_results(results)
-        except ValueError:
-            print("Please enter a valid number.")
+        persons = get_valid_positive_int("How many guests? ", "Enter a valid number of guests")   
+        results = find_rooms_by_capacity(persons)
+        show_search_results(results)
+           
             
     elif search_choice == "2":
         pass
@@ -47,21 +46,10 @@ def search_rooms_menu():
         pass
 
 def get_room_number():
-    while True:
-        try:
-            return int(input("Enter room number to reserve: "))
-        except ValueError:
-            print("Please enter a valid room number.")
+    return get_valid_positive_int("Enter room number to reserve: ", "Please enter a valid room number.")
 
 def get_number_of_nights():
-    while True:
-        try:
-            nights = int(input("Enter how many nights you need: "))
-            if nights > 0:
-                return nights
-            print("Number of nights must be at least 1.")
-        except ValueError:
-            print("Please enter a valid number of nights.")
+    return get_valid_positive_int("Enter how many nights you need: ", "Please enter a valid number of nights.")
 
 
 # Main menu
@@ -72,7 +60,7 @@ while True:
     if choice == "1":
         show_available_rooms()
 
-    if choice == "2":
+    elif choice == "2":
         search_rooms_menu()
 
     elif choice == "3":
@@ -93,12 +81,9 @@ while True:
         else:
             show_customers_bookings()
             while True:
-                try:
-                    user_input = int(input("\nPlease enter the number of booking you want to cancel: "))
-                    if cancel_reservation(user_input):
-                        break
-                except ValueError:
-                    print("Please enter a valid number.")
+                user_input = get_valid_positive_int("\nPlease enter the number of booking you want to cancel: ")
+                if cancel_reservation(user_input):
+                    break
 
     elif choice == "6":
         print("\nThank you for using our Booking System. Bye!")

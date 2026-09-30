@@ -21,12 +21,12 @@ def make_reservation(current_customer, selected_room_number, number_of_nights):
                 new_booking = Booking(room, current_customer, number_of_nights)
                 bookings.append(new_booking)
                 print(f"\nGreat! Room {room.room_number} is now booked for you, {current_customer.firstname}")
-                print(f"\nTotal price for {number_of_nights} night(s): ${new_booking.total_price}")
+                print(f"Total price for {number_of_nights} night(s): ${new_booking.total_price}")
             else:
                 print("Sorry, this room is unavailable more")
             return
         
-    print(f"No room with this number") 
+    print(f"\nNo room with this number") 
 
 def cancel_reservation(user_input):
     booking_index = user_input - 1
