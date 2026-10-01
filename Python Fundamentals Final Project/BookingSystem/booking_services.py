@@ -15,12 +15,12 @@ def show_available_rooms():
         for room in available_rooms:
             print(room)
 
-def make_reservation(current_customer, selected_room_number, number_of_nights):
+def make_reservation(current_customer, selected_room_number, date_of_start, number_of_nights):
     for room in rooms:
         if room.room_number == selected_room_number:
             if room.get_availability():
                 room.set_availability(False)
-                new_booking = Booking(room, current_customer, number_of_nights)
+                new_booking = Booking(room, current_customer, date_of_start, number_of_nights)
                 bookings.append(new_booking)
                 print(f"\nGreat! Room {room.room_number} is now booked for you, {current_customer.firstname}")
                 print(new_booking.get_receipt())

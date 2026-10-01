@@ -11,6 +11,7 @@ from booking_services import (
     find_rooms_by_type
 )
 from utils import get_valid_text, get_valid_positive_int
+from datetime import date, datetime
 
 current_customer = None
 
@@ -43,7 +44,7 @@ def search_rooms_menu():
         print("1. Search by number of guests")
         print("2. Search by maximum price")
         print("3. View VIP rooms only")
-        print("4. Exit from rooms searc")
+        print("4. Exit from rooms search")
         
         search_choice = input("Select search option (1-4): ").strip()
         
@@ -52,7 +53,7 @@ def search_rooms_menu():
             results = find_rooms_by_capacity(persons)
             show_search_results(results)    
         elif search_choice == "2":
-            customer_price = get_valid_positive_int("What the maximum price ($) per night (min 50$)?", "Enter valid price ")
+            customer_price = get_valid_positive_int("What the maximum price ($) per night (min 50$)?", "Enter valid price")
             results = find_rooms_by_price(customer_price)
             show_search_results(results) 
         elif search_choice == "3":
@@ -61,7 +62,7 @@ def search_rooms_menu():
         elif search_choice == "4":
             break
         else:
-            print("\nNo such option. Please select search option (1-3)")
+            print("\nNo such option. Please select search option (1-4)")
 
 def get_room_number():
     return get_valid_positive_int("Enter room number to reserve: ", "Please enter a valid room number.")
@@ -69,6 +70,8 @@ def get_room_number():
 def get_number_of_nights():
     return get_valid_positive_int("Enter how many nights you need: ", "Please enter a valid number of nights.")
 
+def get_date_of_start():
+    return date.today()
 
 # Main menu
 while True:
@@ -87,8 +90,14 @@ while True:
 
         selected_room_number = get_room_number()
         number_of_nights = get_number_of_nights()
+        date_of_start = get_date_of_start()
 
-        make_reservation(current_customer, selected_room_number, number_of_nights)
+        make_reservation(
+            current_customer, 
+            selected_room_number, 
+            date_of_start, 
+            number_of_nights
+        )
 
     elif choice == "4":
         show_customers_bookings()
