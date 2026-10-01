@@ -74,52 +74,55 @@ def get_date_of_start():
     return get_valid_date(f"Enter the start day in format {DATE_FORMAT_DISPLAY}: ", f"The date should be in format {DATE_FORMAT_DISPLAY}")
 
 # Main menu
-while True:
-    display_menu()
-    choice = input(f"Please enter a number of the action for you (1-6): \n").strip()
+def main():
+    global current_customer
 
-    if choice == "1":
-        show_available_rooms()
+    while True:
+        display_menu()
+        choice = input(f"Please enter a number of the action for you (1-6): \n").strip()
 
-    elif choice == "2":
-        search_rooms_menu()
+        if choice == "1":
+            show_available_rooms()
 
-    elif choice == "3":
-        if current_customer is None:
-            current_customer = get_customer()
+        elif choice == "2":
+            search_rooms_menu()
 
-        selected_room_number = get_room_number() # TODO change the order, ask date and nights, show availaable, them ask room number/check it
-        number_of_nights = get_number_of_nights()
-        date_of_start = get_date_of_start()
+        elif choice == "3":
+            if current_customer is None:
+                current_customer = get_customer()
 
-        make_reservation(
-            current_customer, 
-            selected_room_number, 
-            date_of_start, 
-            number_of_nights
-        )
+            selected_room_number = get_room_number() # TODO change the order, ask date and nights, show availaable, them ask room number/check it
+            number_of_nights = get_number_of_nights()
+            date_of_start = get_date_of_start()
 
-    elif choice == "4":
-        show_customers_bookings()
+            make_reservation(
+                current_customer, 
+                selected_room_number, 
+                date_of_start, 
+                number_of_nights
+            )
 
-    elif choice == "5":
-        if not bookings:
-            print("\nYou don't have active bookings to cancel.")
-        else:
+        elif choice == "4":
             show_customers_bookings()
-            while True:
-                user_input = get_valid_positive_int("\nPlease enter the number of booking you want to cancel: ")
-                if cancel_reservation(user_input):
-                    break
 
-    elif choice == "6":
-        print("\nThank you for using our Booking System. Bye!")
-        break
+        elif choice == "5":
+            if not bookings:
+                print("\nYou don't have active bookings to cancel.")
+            else:
+                show_customers_bookings()
+                while True:
+                    user_input = get_valid_positive_int("\nPlease enter the number of booking you want to cancel: ")
+                    if cancel_reservation(user_input):
+                        break
 
-    else:
-        print("\nInvalid choice! Please enter a number between 1 and 6.")
+        elif choice == "6":
+            print("\nThank you for using our Booking System. Bye!")
+            break
 
+        else:
+            print("\nInvalid choice! Please enter a number between 1 and 6.")
 
+main()
 
 
 
