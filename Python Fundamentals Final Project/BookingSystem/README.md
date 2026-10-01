@@ -11,4 +11,4 @@ A Python CLI application for managing hotel room reservations.
 Run the following command in your terminal:
 
 ```bash
-python index.py
+python3 index.py
