@@ -21,14 +21,17 @@ def get_valid_text(prompt, error_message="Input cannot be empty. Please try agai
 def get_valid_date(prompt, error_message="Please enter a valid date format."):
     while True:
         user_date = input(prompt).strip()
+
         try:
             parsed_date = datetime.strptime(user_date, DATE_FORMAT).date()
-            if parsed_date >= date.today():
-                return parsed_date
-            print("Date cannot be in the past.")
-            continue
         except ValueError:
             print(error_message)
             continue
+
+        if parsed_date < date.today():
+            print("Date cannot be in the past. Please enter today or future date.")
+            continue
+
+        return parsed_date
 
         

@@ -11,7 +11,7 @@ from booking_services import (
     find_rooms_by_type
 )
 from utils import get_valid_text, get_valid_positive_int, get_valid_date
-from constants import DATE_FORMAT
+from constants import DATE_FORMAT_DISPLAY
 
 current_customer = None
 
@@ -71,7 +71,7 @@ def get_number_of_nights():
     return get_valid_positive_int("Enter how many nights you need: ", "Please enter a valid number of nights.")
 
 def get_date_of_start():
-    return get_valid_date(f"Enter the start day in format {DATE_FORMAT}: ", f"The date should be in format {DATE_FORMAT}")
+    return get_valid_date(f"Enter the start day in format {DATE_FORMAT_DISPLAY}: ", f"The date should be in format {DATE_FORMAT_DISPLAY}")
 
 # Main menu
 while True:
@@ -88,7 +88,7 @@ while True:
         if current_customer is None:
             current_customer = get_customer()
 
-        selected_room_number = get_room_number()
+        selected_room_number = get_room_number() # TODO change the order, ask date and nights, show availaable, them ask room number/check it
         number_of_nights = get_number_of_nights()
         date_of_start = get_date_of_start()
 
