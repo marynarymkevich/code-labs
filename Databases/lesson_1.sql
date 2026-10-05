@@ -17,3 +17,9 @@ SELECT * FROM customers WHERE first_name LIKE '____';
 SELECT * FROM products ORDER BY price ASC LIMIT 5 OFFSET 5;
 SELECT * FROM customers WHERE joined_date < '2025-01-01'  AND city != 'Uppsala' ORDER BY city ASC, last_name ASC;
 
+-- EXTRA CHALLENGES
+-- Level 1
+SELECT * FROM products WHERE category !='Accessories' AND stock > 0 AND name LIKE '% %' ORDER BY category, price DESC;
+SELECT * FROM customers WHERE city LIKE 'S%' OR city LIKE 'M%' OR city is NULL;
+SELECT * FROM products WHERE category = 'Shoes' ORDER BY price DESC LIMIT 1 OFFSET 1;
+SELECT * FROM customers WHERE  joined_date LIKE '2024%' OR joined_date LIKE '2025%' ORDER BY joined_date DESC LIMIT 3;
