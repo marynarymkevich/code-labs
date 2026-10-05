@@ -32,7 +32,7 @@ def get_customer():
 
     customer_first_name = get_valid_text("Please enter your first name: ")
     customer_last_name = get_valid_text("Please enter your last name: ")
-    print(f"Nice to see you, {customer_first_name} {customer_last_name}")
+    print(f"\nNice to see you, {customer_first_name} {customer_last_name}!\n")
 
     return Customer(customer_first_name, customer_last_name)
 
