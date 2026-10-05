@@ -23,3 +23,16 @@ SELECT * FROM products WHERE category !='Accessories' AND stock > 0 AND name LIK
 SELECT * FROM customers WHERE city LIKE 'S%' OR city LIKE 'M%' OR city is NULL;
 SELECT * FROM products WHERE category = 'Shoes' ORDER BY price DESC LIMIT 1 OFFSET 1;
 SELECT * FROM customers WHERE  joined_date LIKE '2024%' OR joined_date LIKE '2025%' ORDER BY joined_date DESC LIMIT 3;
+
+-- Level 2
+SELECT first_name || ' ' || last_name AS full_name FROM customers ORDER BY last_name;
+SELECT *,
+       CASE 
+           WHEN price < 200 THEN 'budget'
+           WHEN price <= 799 THEN 'mid'
+           ELSE 'premium'
+       END AS price_level
+FROM products;
+SELECT first_name, COALESCE(city, 'Unknown') AS city FROM customers;
+SELECT * FROM customers WHERE strftime('%m', joined_date) BETWEEN '01' AND '06';
+SELECT * FROM products ORDER BY LENGTH(name) DESC LIMIT 1;
