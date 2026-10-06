@@ -75,3 +75,41 @@ CREATE TABLE campaigns (
 -- INSERT INTO campaigns (name, start_date, end_date)  VALUES ('Summer sale', '2025-07-28', '2025-07-20'); => Result: CHECK constraint failed: end_date >= start_date
 
 -- Level 3
+CREATE TABLE product_sizes (
+    size_id INTEGER PRIMARY KEY,
+    product_id INTEGER REFERENCES products(product_id),
+    size TEXT CHECK (size IN ('S', 'M', 'L', 'XL')),
+    stock INTEGER DEFAULT 0,
+    UNIQUE (product_id, size)
+);
+INSERT INTO product_sizes (product_id, size, stock) VALUES (1, 'M', 10);
+INSERT INTO product_sizes (product_id, size, stock) VALUES (2, 'L', 5);
+-- INSERT INTO product_sizes (product_id, size, stock)  VALUES (1, 'M', 5); => Result: UNIQUE constraint failed: product_sizes.product_id, product_sizes.size
+
+CREATE TABLE employees (
+    employee_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name TEXT NOT NULL,
+    title TEXT,
+    manager_id INTEGER,
+    FOREIGN KEY (manager_id) REFERENCES employees(employee_id)
+);
+INSERT INTO employees (name, title, manager_id) VALUES ('Alice', 'CEO', NULL);
+INSERT INTO employees (name, title, manager_id) VALUES ('Bob', 'Developer', 1), ('Anna', 'Designer', 1);
+
+CREATE TABLE teams (
+    team_id INTEGER PRIMARY KEY,
+    name TEXT NOT NULL
+);
+
+CREATE TABLE players (
+    player_id INTEGER PRIMARY KEY,
+    name TEXT NOT NULL,
+    team_id INTEGER,
+    FOREIGN KEY (team_id) REFERENCES teams(team_id) ON DELETE CASCADE
+);
+INSERT INTO teams (name) VALUES ('Team 1');
+INSERT INTO teams (name) VALUES ('Team 2');
+INSERT INTO teams (name) VALUES ('Team 3');
+INSERT INTO players (name, team_id) VALUES ('Alex', 1), ('Ben', 1);
+DELETE FROM teams WHERE team_id = 1;
+SELECT * FROM players;
