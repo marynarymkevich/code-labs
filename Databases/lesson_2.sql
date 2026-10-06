@@ -26,3 +26,9 @@ CREATE TABLE reviews(
 	FOREIGN KEY (product_id) REFERENCES products(product_id)
 );
 
+-- INSERT INTO reviews (product_id, rating, comment) VALUES (1, 6, 'Great product'); => Result: CHECK constraint failed: rating >= 1 AND rating <= 5
+
+-- INSERT INTO reviews (product_id, rating, comment) VALUES (50, 5, 'Great product!'); => Result: FOREIGN KEY constraint failed
+
+
+
