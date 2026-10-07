@@ -8,3 +8,4 @@ INSERT INTO order_items (order_id, product_id, quantity, unit_price) VALUES (16,
 UPDATE orders SET status='shipped' WHERE order_id=12;
 UPDATE products SET stock=50  WHERE product_id=5;
 UPDATE products set price=price*1.1 WHERE category='Accessories';
+DELETE FROM order_items WHERE order_id = 9;
