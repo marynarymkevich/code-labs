@@ -38,3 +38,23 @@ JOIN order_items oi ON o.order_id = oi.order_id
 JOIN products p ON oi.product_id = p.product_id
 WHERE p.name = 'Hoodie Black'
 
+-- Show all customers and their orders, including customers with no orders
+SELECT * FROM customers c
+LEFT JOIN orders o ON o.customer_id = c.customer_id
+
+-- Which products have never been sold?
+SELECT * FROM products p
+LEFT JOIN order_items oi ON p.product_id = oi.product_id
+WHERE oi.order_id IS NULL;
+
+-- Challenge: show customers from Uppsala and every product they bought (first name, product name, quantity)
+SELECT c.first_name, c.city, p.name, oi.quantity FROM customers c
+JOIN orders o ON c.customer_id = o.customer_id
+JOIN order_items oi ON o.order_id = oi.order_id
+JOIN products p ON p.product_id = oi.product_id
+WHERE c.city = 'Uppsala'
+
+
+
+
+
