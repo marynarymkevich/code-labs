@@ -37,7 +37,18 @@ SELECT first_name, COALESCE(city, 'Unknown') AS city FROM customers;
 SELECT * FROM customers WHERE strftime('%m', joined_date) BETWEEN '01' AND '06';
 SELECT * FROM products ORDER BY LENGTH(name) DESC LIMIT 1;
 SELECT substr(customers.email, 1, (instr(customers.email, '@') -1)) AS username FROM customers;
+
+-- Which products cost more than the average price? Don't type the average yourself: let SQL calculate it inside the query.
+SELECT p.name, p.price FROM products p
+WHERE p.price > (SELECT AVG(price) FROM products);
+
 -- "Socks 3-pack costs 129 kr"
 SELECT p.name || ' costs ' || CAST(p.price AS INT) || ' kr'  AS product_info FROM products p
 WHERE p.stock > 0 ORDER BY price ASC;
+
+-- How many customers live in each city? Biggest city first.
+SELECT city, COUNT(*) AS customers_number 
+FROM customers
+GROUP BY city
+ORDER BY customers_number DESC;
 
