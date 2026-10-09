@@ -36,3 +36,8 @@ FROM products;
 SELECT first_name, COALESCE(city, 'Unknown') AS city FROM customers;
 SELECT * FROM customers WHERE strftime('%m', joined_date) BETWEEN '01' AND '06';
 SELECT * FROM products ORDER BY LENGTH(name) DESC LIMIT 1;
+SELECT substr(customers.email, 1, (instr(customers.email, '@') -1)) AS username FROM customers;
+-- "Socks 3-pack costs 129 kr"
+SELECT p.name || ' costs ' || CAST(p.price AS INT) || ' kr'  AS product_info FROM products p
+WHERE p.stock > 0 ORDER BY price ASC;
+
