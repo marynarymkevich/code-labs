@@ -33,6 +33,8 @@ product_count = result[0]
 
 print(f"Number of products in '{category}': {product_count}")
 
+
+
 ## Exercise 4
 # building SQL with an f-string is dangerous because it allows someone to insert their own code. 
 # This code can then modify, steal, or delete data from our database
