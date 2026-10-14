@@ -28,3 +28,25 @@ white_products = db.products.find({"details.color": "white"})
 
 for product in white_products:
     print(f"{product['name']} (Color: {product['details']['color']})")
+
+
+print("\n--- Exercise 5 ---")
+products = db.products.find(
+    {"tags": "sport"},
+    {"name": 1, "tags": 1, "_id": 0}
+)
+
+for product in products:
+    print(product)
+
+
+print("\n--- Exercise 6 ---")
+products = db.products.find({}, {"name": 1, "price": 1, "_id": 0}).sort("price", 1).limit(5)
+for product in products:
+    print(product)
+
+
+print("\n---- Exercise 7 ---")
+orders = db.orders.find({"items.product_id": 2})
+for order in orders:
+    print(f"Order {order['_id']}: {order['items']}")
