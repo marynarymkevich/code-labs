@@ -1,4 +1,6 @@
 from pymongo import MongoClient
+from datetime import datetime
+
 client = MongoClient("mongodb://localhost:27017/")
 db = client["webshop"]
 
@@ -50,3 +52,36 @@ print("\n---- Exercise 7 ---")
 orders = db.orders.find({"items.product_id": 2})
 for order in orders:
     print(f"Order {order['_id']}: {order['items']}")
+
+
+print("\n---- Exercise 8 ---")
+products = db.products.update_many({"category": "Accessories"}, {"$inc": {"price": 20}})
+accessories = db.products.find({"category": "Accessories"})
+
+for product in accessories:
+    print(f"{product['name']}: {product['price']} kr")
+
+
+print("\n--- Exercise 9 ---")
+db.products.update_one(
+    {"name": "Rain Jacket"},
+    {
+        "$addToSet": {"tags": "new"},
+        "$set": {"restock_date": datetime.now()}
+    }
+)
+rain_jacket = db.products.find_one({"name": "Rain Jacket"})
+print(rain_jacket)
+
+
+print("\n--- Exercise 10 ---")
+query = {
+    "status": "new",
+    "order_date": {"$lt": datetime(2026, 3, 20)}
+}
+
+count = db.orders.count_documents(query)
+print(f"Orders to delete: {count}")
+
+result = db.orders.delete_many(query)
+print(f"Deleted orders: {result.deleted_count}")
