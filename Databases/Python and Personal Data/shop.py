@@ -30,7 +30,11 @@ def search_customers(conn):
 def add_product(conn):
     name = input("Name: ")
     category = input("Category: ")
-    price = float(input("Price: "))
+    try:
+        price = float(input("Price: "))
+    except ValueError:
+        print("Invalid input! Price must be a number.")
+        return
     stock = int(input("Stock: "))
     conn.execute(
         "INSERT INTO products (name, category, price, stock) VALUES (?, ?, ?, ?)",
@@ -66,10 +70,27 @@ def show_receipt(conn):
         print(f"{name}: {quantity} x {price} kr = {total} kr")
 
 
+def top_products(conn):
+    query = """
+        SELECT p.name, SUM(oi.quantity) AS total_sold
+        FROM order_items oi
+        JOIN products p ON oi.product_id = p.product_id
+        GROUP BY oi.product_id
+        ORDER BY total_sold DESC
+        LIMIT 3
+    """
+    cursor = conn.execute(query)
+    rows = cursor.fetchall()
+
+    print("\n--- Top 3 Best-Selling Products ---")
+    for name, total_sold in rows:
+        print(f"{name} {total_sold} sold")
+    print()
+
 def main():
     conn = connect()
     while True:
-        print("\n1) List products  2) Search customers  3) Add product  4) Change stock  5) Show receipt  0) Quit")
+        print("\n1) List products  2) Search customers  3) Add product  4) Change stock  5) Show receipt  6) Top 3 products  0) Quit")
         choice = input("> ")
         if choice == "1":
             list_products(conn)
@@ -81,6 +102,8 @@ def main():
             change_stock(conn)
         elif choice == "5":
             show_receipt(conn)
+        elif choice == "6":
+            top_products(conn)
         elif choice == "0":
             break
     conn.close()
