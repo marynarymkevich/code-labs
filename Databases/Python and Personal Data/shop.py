@@ -1,8 +1,11 @@
+from pathlib import Path
 import sqlite3
 
+BASE_DIR = Path(__file__).resolve().parent
+DB_PATH = BASE_DIR / "webshop.db"
 
 def connect():
-    conn = sqlite3.connect("webshop.db")
+    conn = sqlite3.connect(DB_PATH)
     conn.execute("PRAGMA foreign_keys = ON")
     return conn
 
@@ -49,16 +52,24 @@ def change_stock(conn):
 
 
 def show_receipt(conn):
-    product_id = int(input("Product ID: "))
-    conn.execute(
-        "SELECT p.name, p"
-    )
+    order_id = int(input("Order ID: "))
+    query = """
+        SELECT p.name, oi.quantity, p.price, (oi.quantity * p.price) AS total
+        FROM order_items oi
+        JOIN products p ON oi.product_id = p.product_id
+        WHERE oi.order_id = ?
+    """
+    cursor = conn.execute(query, (order_id,))
+    rows = cursor.fetchall()
+
+    for name, quantity, price, total in rows:
+        print(f"{name}: {quantity} x {price} kr = {total} kr")
 
 
 def main():
     conn = connect()
     while True:
-        print("\n1) List products  2) Search customers  3) Add product  4) Change stock  0) Quit")
+        print("\n1) List products  2) Search customers  3) Add product  4) Change stock  5) Show receipt  0) Quit")
         choice = input("> ")
         if choice == "1":
             list_products(conn)
@@ -68,6 +79,8 @@ def main():
             add_product(conn)
         elif choice == "4":
             change_stock(conn)
+        elif choice == "5":
+            show_receipt(conn)
         elif choice == "0":
             break
     conn.close()
