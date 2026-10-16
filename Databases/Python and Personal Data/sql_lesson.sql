@@ -24,3 +24,6 @@ LEFT JOIN orders o ON c.customer_id = o.customer_id
 GROUP BY c.customer_id;
 
 SELECT * FROM customer_overview2;
+
+
+-- Ex 12. According to GDPR, we cannot collect unnecessary data. Birth dates are not necessary for now.
