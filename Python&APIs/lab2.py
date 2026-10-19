@@ -4,42 +4,62 @@ GEO_URL = "https://geocoding-api.open-meteo.com/v1/search"
 WEATHER_URL = "https://api.open-meteo.com/v1/forecast"
 
 city_name = "Stockholm"
-params = {
-    "name": city_name,
-    "count": 1
-}
 
-data = get_json(GEO_URL, params=params)
-print("Full response:", data)
+def find_city(city_name):
+    params = {
+        "name": city_name,
+        "count": 1
+    }
 
-if data and data.get("results"):
-    first_result = data["results"][0]
-    lat = first_result["latitude"]
-    lon = first_result["longitude"]
-    print(f"Latitude: {lat}, Longitude: {lon}")
-else:
-    print("City not found")
+    data = get_json(GEO_URL, params=params)
+    # print("Full response:", data)
+
+    if data and data.get("results"):
+        first_result = data["results"][0]
+        lat = first_result["latitude"]
+        lon = first_result["longitude"]
+        country = first_result.get("country", "")
+        name = first_result.get("name", city_name)
+
+        return lat, lon, name, country
+    else:
+        return None, None, None, None
 
 
 ## Task 2
-params = {
-    "latitude": 59.32938,
-    "longitude": 18.06871,
-    "current": "temperature_2m,wind_speed_10m"
-}
+# lat, lon = find_city("Stockholm")
 
-weather_data = get_json(WEATHER_URL, params=params)
-print("\nFull weather response:", weather_data)
+def get_weather(lat, lon):
+    params = {
+        "latitude": lat,
+        "longitude": lon,
+        "current": "temperature_2m,wind_speed_10m"
+    }
 
-if weather_data and weather_data.get("current"):
-    current = weather_data["current"]
-    units = weather_data["current_units"]
+    weather_data = get_json(WEATHER_URL, params=params)
+    # print("\nFull weather response:", weather_data)
 
-    temp = current["temperature_2m"]
-    temp_unit = units["temperature_2m"]
+    if weather_data and weather_data.get("current"):
+        current = weather_data["current"]
+        units = weather_data["current_units"]
 
-    wind = current["wind_speed_10m"]
-    wind_unit = units["wind_speed_10m"]
+        temp = current["temperature_2m"]
+        temp_unit = units["temperature_2m"]
 
-    print(f"\nTemperature: {temp}{temp_unit}")
-    print(f"Wind speed: {wind} {wind_unit}")
+        wind = current["wind_speed_10m"]
+        wind_unit = units["wind_speed_10m"]
+
+        return f"{temp}{temp_unit}, wind {wind} {wind_unit}"
+
+
+## Task 3
+user_city = input("Enter the city name: ").strip()
+lat, lon, city_official_name, country = find_city(user_city)
+if lat is not None and lon is not None:
+    weather_info = get_weather(lat, lon)
+    if weather_info:
+        print(f"\n{city_official_name}, {country}: {weather_info}")
+    else:
+        print("\nCould not retrieve weather details.")
+else:
+    print("\nCould not get weather because the city was not found.")
