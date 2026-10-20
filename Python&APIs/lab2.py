@@ -55,8 +55,10 @@ def get_weather(lat, lon):
 ## Task 3
 user_city = input("Enter the city name: ").strip()
 lat, lon, city_official_name, country = find_city(user_city)
+
 if lat is not None and lon is not None:
     weather_info = get_weather(lat, lon)
+    
     if weather_info:
         print(f"\n{city_official_name}, {country}: {weather_info}")
     else:
