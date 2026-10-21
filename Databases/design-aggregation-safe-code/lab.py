@@ -72,3 +72,37 @@ results = db.products.aggregate([
 
 for row in results:
     print(row)
+
+
+# Ex 6.
+orders = db.orders.aggregate([
+    {
+        "$group": {
+            "_id": "$customer_id",
+            "count": {"$sum": 1}
+        }
+    }, 
+    {
+        "$match": {
+            "count": {"$gte": 2}
+        }
+    }
+])
+
+print(f"\n Customers with 2 or more orders:")
+for order in orders:
+    print(f"{order}")
+
+
+# Ex 7.
+order_item_counts = db.orders.aggregate([
+    {
+        "$project": {
+            "item_count": {"$size": "$items"}
+        }
+    }
+])
+
+print("\nNumber of items per order:")
+for row in order_item_counts:
+    print(row)
