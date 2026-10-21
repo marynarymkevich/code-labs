@@ -1,6 +1,10 @@
-from fastapi import FastAPI, HTTPException
+import os
+from dotenv import load_dotenv
+from fastapi import FastAPI, HTTPException, Header, Depends
 from pydantic import BaseModel
 
+load_dotenv()
+API_KEY = os.getenv("API_KEY")
 app = FastAPI()
 
 movies = [
@@ -20,7 +24,10 @@ class MovieUpdate(BaseModel):
     director: str | None = None
     year: int | None = None
 
-
+def check_key(x_api_key: str | None = Header(default=None)):
+    if not API_KEY or x_api_key != API_KEY:
+        raise HTTPException(status_code=401, detail="Invalid or missing API Key")
+    
 def find_movie(movie_id: int):
     for movie in movies:
         if movie['id'] == movie_id:
@@ -50,7 +57,7 @@ def get_movie(movie_id: int):
 # Errors 404, 422
 
 
-@app.post("/movies", status_code=201)
+@app.post("/movies", status_code=201, dependencies=[Depends(check_key)])
 def create_movie(movie: Movie):
     new_id = max((existing_movie["id"] for existing_movie in movies), default=0) + 1
  
@@ -65,7 +72,7 @@ def create_movie(movie: Movie):
     return new_movie
 
 
-@app.put("/movies/{movie_id}")
+@app.put("/movies/{movie_id}", dependencies=[Depends(check_key)])
 def replace_movie(movie_id: int, movie: Movie):
     existing_movie = find_movie(movie_id)
     
@@ -76,13 +83,13 @@ def replace_movie(movie_id: int, movie: Movie):
     return existing_movie
 
 
-@app.delete("/movies/{movie_id}", status_code=204)
+@app.delete("/movies/{movie_id}", status_code=204, dependencies=[Depends(check_key)])
 def delete_movie(movie_id: int):
     existing_movie = find_movie(movie_id)
     movies.remove(existing_movie)
 
 
-@app.patch("/movies/{movie_id}")
+@app.patch("/movies/{movie_id}", dependencies=[Depends(check_key)])
 def update_movie(movie_id: int, movie_update: MovieUpdate):
     existing_movie = find_movie(movie_id)
     changes = movie_update.model_dump(exclude_unset=True)
