@@ -106,3 +106,78 @@ order_item_counts = db.orders.aggregate([
 print("\nNumber of items per order:")
 for row in order_item_counts:
     print(row)
+
+
+# Ex 8.
+sold_per_category = db.orders.aggregate([
+    {
+        "$match": {"status": {"$ne": "cancelled"}}
+    },
+    {
+        "$unwind": "$items"
+    },
+    {
+        "$lookup": {
+            "from": "products",
+            "localField": "items.product_id",
+            "foreignField": "_id",
+            "as": "product_info"
+        }
+    },
+    {
+        "$unwind": "$product_info"
+    },
+    {
+        "$group": {
+            "_id": "$product_info.category",
+            "total_sold": {"$sum": "$items.quantity"}
+        }
+    }
+])
+
+print("\nUnits sold per category:")
+for row in sold_per_category:
+    print(row)
+
+
+# Ex 9.
+revenue_by_status = db.orders.aggregate([
+    {
+        "$unwind": "$items"
+    },
+    {
+        "$group": {
+            "_id": "$status",
+            "total_revenue": {
+                "$sum": {
+                    "$multiply": ["$items.quantity", "$items.unit_price"]
+                }
+            }
+        }
+    }
+])
+
+print("\nRevenue per status:")
+for row in revenue_by_status:
+    print(row)
+
+
+# Ex 10.
+popular_tags = db.products.aggregate([
+    {
+        "$unwind": "$tags"
+    },
+    {
+        "$group": {
+            "_id": "$tags",
+            "count": {"$sum": 1}
+        }
+    },
+    {
+        "$sort": {"count": -1}
+    }
+])
+
+print("\nMost common tags:")
+for row in popular_tags:
+    print(row)
