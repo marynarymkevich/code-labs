@@ -1,0 +1,97 @@
+Exercise 1
+Explain in your own words why the Waterfall method often goes wrong when building software. Give two reasons.   
+
+Reason 1: The customer sees the product only at the very end. If they change their mind, it is too late and very expensive to fix.
+Reason 2: Testing happens at the last step. Teams find big bugs too late, so all risks are saved for the end of the project. 
+
+
+
+Exercise 2
+Pick two of the four values in the Agile Manifesto. For each one, give an example of what it could look like in a real team.   
+1. People and talking together more than processes and tools:   
+    Example: If a developer has a problem, they quickly talk face-to-face or on a quick call instead of creating a slow support ticket.
+2. Responding to change more than following a plan:
+    Example: If user testing shows that people do not like a button design, the team changes it in the next sprint instead of following the old 6-month plan.   
+
+
+Exercise 3
+Who does what? Write Product Owner, Scrum Master or Developers for each line.   
+a) Decides the order of the Product Backlog: Product Owner   
+b) Decides how to build a feature: Developers   
+c) Helps the team when a test server has been down for two days: Scrum Master (removes obstacles)   
+d) Talks to customers about what they need: Product Owner   
+e) Coaches the team when the Daily Scrum takes 45 minutes: Scrum Master   
+
+
+Exercise 4
+Your team works in two-week sprints. In the middle of a sprint, the CEO comes in and wants a new feature right away. 
+What should happen, according to Scrum?   
+The team does not change the current Sprint Goal or add new work to the running sprint. 
+The Product Owner should add this new idea to the Product Backlog, order it, and plan it for a future sprint. 
+BUT in my own practice, things were different: 
+we changed the Sprint Goal and the sprint content, moved our current tasks back to the backlog, 
+and implemented the new urgent request from the Product Owner.
+
+
+Exercise 5
+What is the difference between the Sprint Review and the Sprint Retrospective? Who takes part in each?   
+Sprint Review: Focuses on the product. The team shows the working result to stakeholders and customers to get feedback.   
+Who takes part: The Scrum Team (PO, Scrum Master, Developers) and stakeholders/customers.   
+Sprint Retrospective: Focuses on the process and teamwork. The team discusses how they worked together and how to improve in the next sprint.   
+Who takes part: Only the Scrum Team
+
+
+Exercise 6
+Rewrite these backlog items as user stories (As a <...>, I want <...>, so that <...>):   
+a) Add login:   
+    As a user, I want to log in with my email and password, so that I can access my private account.   
+b) Export orders to Excel:   
+    As an accountant, I want to export all orders to an Excel file, so that I can calculate monthly sales reports easily.   
+c) Dark mode:
+    As a mobile user, I want to switch to dark mode, so that my eyes do not hurt when using the app at night. 
+
+
+Exercise 7
+Write three acceptance criteria for this story: As a customer, I want to see my order history, so that I can buy the same thing again.
+- The page shows a list of all past orders with the date, items, and total price.
+- Each order has a visible "Reorder" button.
+- Clicking "Reorder" adds all items from that past order into the shopping cart.  
+
+
+Exercise 8
+Write a Definition of Done for a team of four developers. Include at least five points.   
+- The code is written and follows clean style rules.
+- The code is reviewed and approved by another developer (pull request).
+- All unit tests pass.
+- The feature is tested manually and meets all acceptance criteria.
+- The code is merged to the main branch with no errors. 
+
+
+Exercise 9
+A team's Daily Scrum takes 45 minutes. Everyone stands facing the manager and reports what they did. 
+What is wrong, and what would you suggest?   
+Wrong: 
+- It takes too long (it must be 15 minutes max).
+- It is treated like a status report to a boss, but Daily Scrum is a planning meeting for developers.
+Suggestions:
+- Keep it strictly under 15 minutes.   
+- Developers should talk to each other about the Sprint Goal, not report to a manager.
+- Use the three standard questions: What did I do? What will I do? What is blocking me?
+- Move any long discussions outside the meeting
+
+
+Exercise 10
+Scrum or Kanban? Choose for each team and explain why.
+a) A team building a new mobile app: Scrum. 
+Sprints help plan releases, gather fast feedback, and build a new product step by step.
+b) An IT support desk: Kanban. 
+Work comes in unexpectedly all day, so a continuous flow with WIP limits fits better than fixed sprints.
+c) A team fixing bugs in a webshop that is already live: Kanban. 
+Bugs must be fixed as soon as they appear, so continuous work without waiting for sprint cycles is ideal.
+
+
+Exercise 11
+In planning poker, four developers show 2, 3, 3 and 13 for the same story. What should the team do next?
+The team should ask the person with the lowest estimate (2) and the person with the highest estimate (13) to explain their thoughts. 
+Usually the person who voted 13 sees extra complexity or hidden risks that others missed or they misunderstood the task. 
+After a short discussion, everyone votes again.  
